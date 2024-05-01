@@ -1,15 +1,15 @@
 package simulado;
 
-
-
 import javax.swing.*;
-
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Simulado {
+
+    private static DecimalFormat formato = new DecimalFormat("#.##");
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
 
         String[] nome = new String[100];
         int[] idade = new int[100];
@@ -18,7 +18,6 @@ public class Simulado {
         int count = 0;
         double[][] notas = new double[100][3];
 
-
         do {
             op = mostraMenu();
             if (op == 1) {
@@ -26,15 +25,34 @@ public class Simulado {
                 count++;
             }
             if (op == 2) {
-
                 String mediaAlunos = calcularMedia(nome, notas, count);
                 JOptionPane.showMessageDialog(null, mediaAlunos);
             }
+            if (op == 3){
+                String aprovadoOunao = aprovadoReprovado(nome,notas,count);
+                JOptionPane.showMessageDialog(null,aprovadoOunao);
+            }
+            if (op ==4) {
+                String homensEMulheres = homensEmulheresReprovados(nome,notas,count,sexo);
+                    JOptionPane.showMessageDialog(null,homensEMulheres);
+            }
+            if (op == 5) {
+                double mediaIdadeTurma = idadeMedia(count, idade);
+                JOptionPane.showMessageDialog(null, "Média de idade da turma: " + formato.format(mediaIdadeTurma));
+            }
+            if (op ==6){
+                String listaSexos = listaSexo(nome,count,sexo);
+                JOptionPane.showMessageDialog(null,listaSexos);
+            }
+            if (op == 7) {
+                String listaIdade = listaIdade(nome,idade,count);
+                JOptionPane.showMessageDialog(null, listaIdade);
+            }
 
-        } while (op != 6);
+        } while (op != 8);
     }
 
-    private static int mostraMenu(){
+    private static int mostraMenu() {
         String m = "1 - Cadastrar\n" +
                 "2 - Média de todos os alunos\n" +
                 "3 - Exibir alunos aprovados, recuperação ou reprovado\n" +
@@ -90,20 +108,87 @@ public class Simulado {
         }
     }
 
-    private static String calcularMedia(String[] nome,double notas[][], int count) {
+    private static String calcularMedia(String[] nome, double notas[][], int count) {
         String busca = "";
-        for (int i = 0; i < notas[count].length; i++) {
+        for (int i = 0; i < count; i++) {
             double somaNotas = 0;
-            for (int j = 0; j < 3; j++) {
-                somaNotas += notas[count][j];
+            for (int j = 0; j < notas[i].length; j++) {
+                somaNotas += notas[i][j];
             }
 
-            double mediaNotas = somaNotas / notas[count].length;
-            busca += "Aluno: " + nome[count] + ", Média: " + mediaNotas + "\n";
+            double mediaNotas = somaNotas / notas[i].length;
+            String numeroFormatado = formato.format(mediaNotas);
+            busca += "Aluno: " + nome[i] + ", Média: " + numeroFormatado + "\n";
+        }
+        return busca;
+    }
+
+    private static String aprovadoReprovado(String[] nome, double notas[][], int count) {
+        String busca = "";
+        for (int i = 0; i < count; i++) {
+            double somaNotas = 0;
+            for (int j = 0; j < notas[i].length; j++) {
+                somaNotas += notas[i][j];
+            }
+
+            double mediaNotas = somaNotas / notas[i].length;
+            String numeroFormatado = formato.format(mediaNotas);
+
+            if (mediaNotas >= 0 && mediaNotas <=3){  //Reprovado
+                busca += "Aluno: " + nome[i] + ", Média: " + numeroFormatado + " Reprovado "+"\n";
+            } else if (mediaNotas > 3 && mediaNotas <= 7) { //Recuperação
+                busca += "Aluno: " + nome[i] + ", Média: " + numeroFormatado + " Recuperação "+"\n";
+            } else {
+                busca += "Aluno: " + nome[i] + ", Média: " + numeroFormatado + " Aprovado"+"\n";
+            }
+        }
+        return busca;
+    }
+    private static String homensEmulheresReprovados(String[] nome, double notas[][], int count, String[] sexo) {
+        String busca = "";
+        for (int i = 0; i < count; i++) {
+            double somaNotas = 0;
+            for (int j = 0; j < notas[i].length; j++) {
+                somaNotas += notas[i][j];
+            }
+
+            double mediaNotas = somaNotas / notas[i].length;
+            String numeroFormatado = formato.format(mediaNotas);
+            if (sexo[i].equalsIgnoreCase("F") && mediaNotas <= 3){
+                busca += "Aluno: " + nome[i] + ", Média: " + numeroFormatado + " Reprovado "+"\n";
+            } else if (sexo[i].equalsIgnoreCase("M") && mediaNotas <= 3) {
+                busca += "Aluno: " + nome[i] + ", Média: " + numeroFormatado + " Reprovado "+"\n";
+            }
+        }
+        return busca;
+    }
+    private static double idadeMedia(int count, int[] idade) {
+        int somaIdades = 0;
+        for (int i = 0; i < count; i++) {
+            somaIdades += idade[i];
+        }
+        double mediaTurma = (double) somaIdades / count;
+        return mediaTurma;
+    }
+    private static String listaSexo(String[] nome, int count, String[] sexo){
+        String busca = "";
+
+        for (int i =0;i < count;i++){
+            if (sexo[i].equalsIgnoreCase("M")) {
+                busca +=  "Aluno: " + nome[i] + " :Homem"+"\n";
+            } else if (sexo[i].equalsIgnoreCase("F")) {
+                busca +=  "Aluno: " + nome[i] + " :Mulher"+"\n";
+            }
+        }
+        return busca;
+    }
+    private static String listaIdade(String[] nome, int[] idade,int count){
+        String busca = "";
+        for (int i = 0;i < count;i++){
+            busca += "Aluno: " + nome[i] + " idade: " + idade[i] +"\n";
         }
         return busca;
     }
 }
-
 
 

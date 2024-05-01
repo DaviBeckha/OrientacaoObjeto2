@@ -2,7 +2,6 @@ package enumercao;
 
 import java.util.Date;
 
-import entities.enums.OrderStatus;
 
 public class Order {
 
