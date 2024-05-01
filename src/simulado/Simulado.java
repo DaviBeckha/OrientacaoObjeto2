@@ -59,7 +59,8 @@ public class Simulado {
                 "4 - Percentual de mulheres e homens reprovados\n" +
                 "5 - Médias das idades da turma\n" +
                 "6 - Listar alunos por sexo\n" +
-                "7 - Listar alunos por idade\n";
+                "7 - Listar alunos por idade\n" +
+                "8 - Sair";
         return Integer.parseInt(JOptionPane.showInputDialog(m));
     }
 
