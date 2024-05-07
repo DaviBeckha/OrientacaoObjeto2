@@ -1,4 +1,4 @@
-package aulas_funcoes;
+package aulas_enum_funcoes_simulado.simulado.aulas_funcoes;
 
 import javax.swing.JOptionPane;
 

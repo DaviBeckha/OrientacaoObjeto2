@@ -1,4 +1,4 @@
-package enumercao;
+package aulas_enum_funcoes_simulado.simulado.enumercao;
 
 import java.util.Date;
 

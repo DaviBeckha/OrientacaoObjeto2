@@ -1,4 +1,4 @@
-package simulado;
+package aulas_enum_funcoes_simulado.simulado;
 
 import javax.swing.*;
 import java.text.DecimalFormat;
