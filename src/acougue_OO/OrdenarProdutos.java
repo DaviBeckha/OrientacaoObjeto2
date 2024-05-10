@@ -47,12 +47,14 @@ public class OrdenarProdutos {
     }
 
     public String toString(Boolean mostrarSubTotal) { // Esta recebendo a formatação de Carne
-        return carne.toString() + "Quantidade: " + quantidade + getSubTotal(mostrarSubTotal);
+        return carne.toString() + "Quantidade: " + quantidade + getSubTotal(mostrarSubTotal) + "\n";
     }
 
     private String getSubTotal(Boolean mostrarSubTotal) {
-        return mostrarSubTotal ? " Subtotal: "+ subTotal() : "";
+        return mostrarSubTotal ? " Subtotal: "+ subTotal() : "\n";
+
     }
+
 }
 
 

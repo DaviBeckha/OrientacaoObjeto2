@@ -1,26 +1,26 @@
 package acougue_OO;
 
 public class Proprietario {
-    private String nome;
-    private String nomeAcougue;
-    private String cidade;
+    protected String nomeProprietario;
+    protected String nomeAcougue;
+    protected String cidade;
 
     public Proprietario() {
 
     }
 
-    public Proprietario(String nome, String nomeAcougue, String cidade) {
-        this.nome = nome;
+    public Proprietario(String nomeProprietario, String nomeAcougue, String cidade) {
+        this.nomeProprietario = nomeProprietario;
         this.nomeAcougue = nomeAcougue;
         this.cidade = cidade;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeProprietario() {
+        return nomeProprietario;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeProprietario(String nomeProprietario) {
+        this.nomeProprietario = nomeProprietario;
     }
 
     public String getNomeAcougue() {
@@ -38,4 +38,5 @@ public class Proprietario {
     public void setCidade(String cidade) {
         this.cidade = cidade;
     }
+
 }

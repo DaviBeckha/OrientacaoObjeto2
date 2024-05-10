@@ -15,13 +15,15 @@ public class CaixaAcougue {
 
     private static OrdemGeral ordemGeral = new OrdemGeral (new Date());
     private static Scanner sc = new Scanner (System.in);
+    private static  SimpleDateFormat diaCompra = new SimpleDateFormat("yyyy-MM-dd");
+
 
     public static void main(String[] args) {
 
         Locale.setDefault(Locale.US);
 
-        SimpleDateFormat diaCompra = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat DuasCasas = new SimpleDateFormat("#.##");
+
+
 
         System.out.println("----------DADOS DO PROPRIETÁRIO-----------");
         System.out.print("Nome do proprietário: ");
@@ -33,7 +35,7 @@ public class CaixaAcougue {
 
         Proprietario proprietario = new Proprietario(nmProprietario, nmAcougue, cidade);
 
-        System.out.println("Quantos produtos na loja : ");
+        System.out.print("Quantos produtos na loja : ");
         int x = sc.nextInt();
 
         sc.nextLine();
@@ -43,8 +45,7 @@ public class CaixaAcougue {
         System.out.print("Nome: ");
         String nome = sc.nextLine();
         System.out.print("CPF: ");
-        Integer cpf = sc.nextInt();
-        sc.nextLine();
+        Long cpf = Long.parseLong(sc.nextLine());
         System.out.print("Seu endereço: ");
         String endereco = sc.nextLine();
 
@@ -60,11 +61,12 @@ public class CaixaAcougue {
             System.out.print("Preço do produto: ");
             double precoProduto = sc.nextDouble();
             sc.nextLine();
-            System.out.println("Quantiade do produto:");
+            System.out.print("Quantidade do produto:");
             Integer qntdProduto = sc.nextInt();
             sc.nextLine();
-            System.out.println("Código do produto: ");
+            System.out.print("Código do produto: ");
             String codigoProduto = sc.nextLine();
+
 
             Carne carne = new Carne(nomeProduto, precoProduto,codigoProduto);
             OrdenarProdutos carnes = new OrdenarProdutos(qntdProduto,precoProduto,carne);
@@ -78,7 +80,7 @@ public class CaixaAcougue {
         OrdemGeralVenda compras = new OrdemGeralVenda(new Date(),cliente);
 
         do {
-
+            System.out.println();
             System.out.println(menu());
             System.out.println("Oque deseja: ");
             op = sc.nextInt();
@@ -98,22 +100,17 @@ public class CaixaAcougue {
                     System.out.println(compras.toString());
                     break;
                 case 4:
-
+                    totalCompra(compras);
                     break;
                 case 5:
-                    break;
-                case 6:
-                    break;
-                case 7:
-                    break;
-                case 8:
+                    System.out.println("Obrigado por comprar no: " + nmAcougue);
                     break;
                 default:
                     System.out.println("Opção inválida");
                     break;
             }
 
-        }while (op !=8);
+        }while (op !=5);
 
     }
 
@@ -126,7 +123,7 @@ public class CaixaAcougue {
             System.out.println("Produto não encontrado.");
         } else {
             System.out.println(ordenarProdutos.toString(false));
-            System.out.println("Quantidade: ");
+            System.out.println("Quantidade do produto desejado : ");
             int quantidade = sc.nextInt();
             sc.nextLine();
             if (quantidade > ordenarProdutos.getQuantidade()) {
@@ -137,10 +134,26 @@ public class CaixaAcougue {
             }
         }
     }
+    private static void totalCompra(OrdemGeralVenda compras) {
+        double total = 0.0;
+
+        for (OrdenarProdutos item : compras.getCarne()) {
+            total += item.getPreco() * item.getQuantidade();
+        }
+
+        String dataCompraFormatada = diaCompra.format(compras.getDtcompra());
+
+        System.out.println("Dia da compra: " + dataCompraFormatada
+                + "\nTotal da compra: R$" + total);
+        System.out.println();
+    }
 
     public static String menu() {
         String menu = "1- Lista de itens\n" +
-                "2- Qual item deseja e quantos dele";
+                "2- Qual item deseja e quantos dele\n" +
+                "3- Ver seu carrinho de compras\n" +
+                "4- Finalizar sua compra\n" +
+                "5- Sair";
 
         return menu;
     }

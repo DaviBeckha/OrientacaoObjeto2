@@ -6,6 +6,9 @@ public class Carne {
     private Double preco;
     private String codigo;
 
+    private Proprietario proprietario;
+    private Cliente cliente;
+
     public Carne() {
     }
 
@@ -40,6 +43,17 @@ public class Carne {
     }
 
     public String toString() { //De onde vem a formatação de escrita
-        return "Carne{" + "nome=" + nome + ", preco=" + preco + ", codigo=" + codigo + '}';
+        StringBuilder sb = new StringBuilder();
+      /*  sb.append("Proprietário: " + proprietario.getNomeProprietario() + "\n");
+        sb.append("Açogue: " + proprietario.getNomeAcougue() + "\n");
+        sb.append("Localização: " + proprietario.getCidade() + "\n");
+        sb.append("Nome do cliente: "+ cliente.getNome() + "\n");
+        sb.append("CPF: " + cliente.getCpf() + "\n");
+        sb.append("Endereço: " + cliente.getEndereco() + "\n"); */
+        sb.append("Produtos: " + nome + "\n");
+        sb.append("Preço: " + preco + "\n");
+        sb.append("Código: " + codigo + "\n");
+        return sb.toString();
     }
+
 }

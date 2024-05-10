@@ -6,16 +6,16 @@ public class Cliente {
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    private String nome;
-    private Integer cpf;
-    private String endereco;
+    protected String nome;
+    protected Long cpf;
+    protected String endereco;
 
 
     public Cliente() {
 
     }
 
-    public Cliente(String nome, Integer cpf ,String endereco) {
+    public Cliente(String nome, Long cpf ,String endereco) {
         this.nome = nome;
         this.cpf = cpf;
         this.endereco = endereco;
@@ -38,11 +38,11 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    public Integer getCpf() {
+    public Long getCpf() {
         return cpf;
     }
 
-    public void setCpf(Integer cpf) {
+    public void setCpf(Long cpf) {
         this.cpf = cpf;
     }
 }
