@@ -54,6 +54,7 @@ public class Compras {
             Produto produto = new Produto(produtoNome, precoProduto);
             OrdenarItem item = new OrdenarItem(quantidadeProduto, precoProduto, produto);
 
+
             ordem.addItem(item);
 
 

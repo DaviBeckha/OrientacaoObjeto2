@@ -38,4 +38,8 @@ public class Carne {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+
+    public String toString() { //De onde vem a formatação de escrita
+        return "Carne{" + "nome=" + nome + ", preco=" + preco + ", codigo=" + codigo + '}';
+    }
 }

@@ -1,18 +1,23 @@
 package acougue_main;
 
-import acougue_OO.Carne;
-import acougue_OO.Cliente;
-import acougue_OO.OrdenarProdutos;
-import acougue_OO.Proprietario;
+import acougue_OO.*;
+import pedido_do_cliente_OO.OrdenarItem;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 public class CaixaAcougue {
 
+    private static OrdemGeral ordemGeral = new OrdemGeral (new Date());
+    private static Scanner sc = new Scanner (System.in);
+
     public static void main(String[] args) {
-        Scanner sc = new Scanner (System.in);
+
         Locale.setDefault(Locale.US);
 
         SimpleDateFormat diaCompra = new SimpleDateFormat("yyyy-MM-dd");
@@ -31,22 +36,7 @@ public class CaixaAcougue {
         System.out.println("Quantos produtos na loja : ");
         int x = sc.nextInt();
 
-        for (int i = 0; i < x; i++){
-            System.out.println("Produto #" + (i+1));
-            System.out.print("Nome do produto: ");
-            String nomeProduto = sc.nextLine();
-            System.out.print("Preço do produto: ");
-            double precoProduto = sc.nextDouble();
-            sc.nextLine();
-            System.out.println("Quantiade do produto:");
-            Integer qntdProduto = sc.nextInt();
-            System.out.println("Código do produto: ");
-            String codigoProduto = sc.nextLine();
-
-            Carne carne = new Carne(nomeProduto, precoProduto,codigoProduto);
-            OrdenarProdutos carnes = new OrdenarProdutos(qntdProduto,precoProduto,carne);
-
-        }
+        sc.nextLine();
 
         System.out.println("----------DADOS DO CLIENTE----------");
         System.out.println("Nome do cliente ");
@@ -60,9 +50,33 @@ public class CaixaAcougue {
 
         Cliente cliente = new Cliente(nome, cpf, endereco);
 
+            // Possui os produtos em estoque.
 
 
+        for (int i = 0; i < x; i++){
+            System.out.println("Produto #" + (i+1));
+            System.out.print("Nome do produto: ");
+            String nomeProduto = sc.nextLine();
+            System.out.print("Preço do produto: ");
+            double precoProduto = sc.nextDouble();
+            sc.nextLine();
+            System.out.println("Quantiade do produto:");
+            Integer qntdProduto = sc.nextInt();
+            sc.nextLine();
+            System.out.println("Código do produto: ");
+            String codigoProduto = sc.nextLine();
+
+            Carne carne = new Carne(nomeProduto, precoProduto,codigoProduto);
+            OrdenarProdutos carnes = new OrdenarProdutos(qntdProduto,precoProduto,carne);
+
+            ordemGeral.addItem(carnes);
+
+        }
         int op = 0;
+
+
+        OrdemGeralVenda compras = new OrdemGeralVenda(new Date(),cliente);
+
         do {
 
             System.out.println(menu());
@@ -71,14 +85,20 @@ public class CaixaAcougue {
 
 
 
+
+
             switch (op) {
                 case 1:
+                    System.out.println(ordemGeral.toString(false));
                     break;
                 case 2:
+                    compraItem(compras);
                     break;
                 case 3:
+                    System.out.println(compras.toString());
                     break;
                 case 4:
+
                     break;
                 case 5:
                     break;
@@ -96,6 +116,28 @@ public class CaixaAcougue {
         }while (op !=8);
 
     }
+
+    private static void compraItem(OrdemGeralVenda compras) {
+        sc.nextLine();
+        System.out.println("Digite os código do item: ");
+        String codigo = sc.nextLine();
+        OrdenarProdutos ordenarProdutos = ordemGeral.getItemByCodigo(codigo);
+        if (isNull(ordenarProdutos)) {
+            System.out.println("Produto não encontrado.");
+        } else {
+            System.out.println(ordenarProdutos.toString(false));
+            System.out.println("Quantidade: ");
+            int quantidade = sc.nextInt();
+            sc.nextLine();
+            if (quantidade > ordenarProdutos.getQuantidade()) {
+                System.out.println("Quantidade indisponível.");
+            } else {
+                ordenarProdutos.setQuantidade(ordenarProdutos.getQuantidade() - quantidade);
+                compras.addItem(new OrdenarProdutos(quantidade, ordenarProdutos.getPreco(), ordenarProdutos.getProduto()));
+            }
+        }
+    }
+
     public static String menu() {
         String menu = "1- Lista de itens\n" +
                 "2- Qual item deseja e quantos dele";

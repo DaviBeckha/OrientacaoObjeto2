@@ -8,19 +8,18 @@ import java.util.List;
 
 public class OrdemGeral {
     private Date dtcompra;
-    private Cliente cliente;
 
 
-    private List<OrdenarProdutos> carne = new ArrayList<OrdenarProdutos>();
+
+    public List<OrdenarProdutos> carne = new ArrayList<OrdenarProdutos>();
 
     public OrdemGeral(){
     }
 
-    public OrdemGeral(Date dtcompra, Cliente cliente) {
+    public OrdemGeral(Date dtcompra) {
         this.dtcompra = dtcompra;
-        this.cliente = cliente;
-    }
 
+    }
     public Date getDtcompra() {
         return dtcompra;
     }
@@ -29,16 +28,15 @@ public class OrdemGeral {
         this.dtcompra = dtcompra;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     public List<OrdenarProdutos> getCarne() {
         return carne;
+    }
+
+    public OrdenarProdutos getItemByCodigo(String codigo) {
+        return carne.stream() //
+                .filter(ordenarProdutos -> ordenarProdutos.getProduto().getCodigo().equals(codigo)) //
+                .findAny() //
+                .orElse(null);
     }
 
     public void addItem(OrdenarProdutos carnes){
@@ -47,6 +45,15 @@ public class OrdemGeral {
 
     public void removeItem(OrdenarProdutos carnes){
             carne.remove(carnes);
+    }
+
+
+    public String toString(Boolean mostrarSubTotal) {
+       String result = "";
+        for(OrdenarProdutos car: carne) {
+            result += car.toString(mostrarSubTotal);   // Recebendo de Ordenar produtos
+        }
+        return result;
     }
 
 }

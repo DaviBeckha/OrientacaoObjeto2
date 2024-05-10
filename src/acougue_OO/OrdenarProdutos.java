@@ -1,5 +1,8 @@
 package acougue_OO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OrdenarProdutos {
 
     private Integer quantidade;
@@ -42,4 +45,14 @@ public class OrdenarProdutos {
     public Double subTotal() {
         return preco * quantidade;
     }
+
+    public String toString(Boolean mostrarSubTotal) { // Esta recebendo a formatação de Carne
+        return carne.toString() + "Quantidade: " + quantidade + getSubTotal(mostrarSubTotal);
+    }
+
+    private String getSubTotal(Boolean mostrarSubTotal) {
+        return mostrarSubTotal ? " Subtotal: "+ subTotal() : "";
+    }
 }
+
+
