@@ -66,8 +66,8 @@ public class Simulado {
 
     private static String lerNome() {
         String nome = JOptionPane.showInputDialog("Nome");
-        if (nome == null || nome.trim().isEmpty() || !nome.contains(" ")) {
-            JOptionPane.showMessageDialog(null, "Nome inválido. Por favor, insira o nome completo.");
+        if (nome == null || nome.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nome inválido.");
             return lerNome();
         }
         return nome;
